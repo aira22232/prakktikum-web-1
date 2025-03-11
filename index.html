@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Kopi Indonesia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f9f7f1; /* Light cream background */
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #ffeb3b, #ff9800);
+            padding: 2.5rem;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.85;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 2rem 0;
+            flex: 1;
+        }
+
+        .articles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            padding: 1rem 0;
+        }
+
+        .article-card {
+            flex: 0 0 400px;
+            background: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+            text-align: left;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .article-content h2 {
+            font-size: 1.6rem;
+            color: #d32f2f;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #d32f2f;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            color: #555;
+            text-align: justify;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            background: #fff;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .lightbox-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: block; /* Ensure image is displayed */
+        }
+
+        .lightbox-content h2 {
+            font-size: 1.8rem;
+            color: #d32f2f;
+            margin-bottom: 1rem;
+        }
+
+        .lightbox-content p {
+            font-size: 1rem;
+            color: #555;
+            text-align: justify;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #d32f2f;
+            cursor: pointer;
+        }
+
+        /* Video Container Styles */
+        .video-container {
+            max-width: 1400px;
+            width: 90%;
+            margin: 0 auto 3rem;
+            padding: 0;
+        }
+
+        .video-title {
+            font-size: 1.6rem;
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .video-wrapper:hover {
+            transform: scale(1.02);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #d32f2f;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .articles {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1.5rem;
+            }
+
+            .article-card {
+                flex: 0 0 90%;
+                max-width: 400px;
+            }
+
+            .article-content {
+                height: auto;
+            }
+
+            .container, .video-container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Blog Kopi Indonesia</h1>
+        <p>Macam-Macam Kopi Khas Nusantara</p>
+    </header>
+
+    <div class="container">
+        <section class="articles">
+            <article class="article-card" onclick="openLightbox('Kopi Luwak', 'Kopi Luwak adalah salah satu kopi paling terkenal dan mahal di dunia, berasal dari Indonesia. Kopi ini dihasilkan dari biji kopi yang telah dimakan dan dikeluarkan oleh musang luwak. Proses fermentasi alami di dalam sistem pencernaan luwak memberikan rasa unik yang lembut dan tidak pahit. Kopi ini terutama diproduksi di Sumatera, Jawa, dan Bali, dengan cita rasa yang kaya dan aroma khas.', 'images/kopi-luwak.jpg')">
+                <img src="img/1.jpg" alt="Kopi Luwak" class="article-image" onerror="this.src='https://via.placeholder.com/400x200?text=Kopi+Luwak+Not+Found';">
+                <div class="article-content">
+                    <h2>Kopi Luwak</h2>
+                    <p>Kopi Luwak adalah salah satu kopi paling terkenal dan mahal di dunia, berasal dari Indonesia. Kopi ini dihasilkan dari biji kopi yang telah dimakan dan dikeluarkan oleh musang luwak...</p>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openLightbox('Kopi Gayo', 'Kopi Gayo berasal dari dataran tinggi Gayo di Aceh, Sumatra. Kopi arabika ini terkenal dengan rasa asamnya yang seimbang, aroma floral, dan aftertaste yang manis. Kopi ini sering diproses dengan metode basah (washed process) yang menghasilkan kopi bersih dan segar. Kopi Gayo juga memiliki sertifikasi Fair Trade, menunjukkan komitmen terhadap petani lokal.', 'images/kopi-gayo.jpg')">
+                <img src="img/2.jpg" alt="Kopi Gayo" class="article-image" onerror="this.src='https://via.placeholder.com/400x200?text=Kopi+Gayo+Not+Found';">
+                <div class="article-content">
+                    <h2>Kopi Gayo</h2>
+                    <p>Kopi Gayo berasal dari dataran tinggi Gayo di Aceh, Sumatra. Kopi arabika ini terkenal dengan rasa asamnya yang seimbang, aroma floral, dan aftertaste yang manis...</p>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openLightbox('Kopi Toraja', 'Kopi Toraja berasal dari pegunungan Toraja, Sulawesi Selatan. Kopi arabika ini memiliki karakter kuat dengan rasa cokelat, rempah-rempah, dan sedikit asam buah. Proses pengeringan alami di bawah sinar matahari memberikan tekstur yang unik. Kopi ini sering diekspor dan menjadi favorit di kalangan pecinta kopi internasional karena kompleksitas rasanya.', 'images/kopi-toraja.jpg')">
+                <img src="img/3.jpg" alt="Kopi Toraja" class="article-image" onerror="this.src='https://via.placeholder.com/400x200?text=Kopi+Toraja+Not+Found';">
+                <div class="article-content">
+                    <h2>Kopi Toraja</h2>
+                    <p>Kopi Toraja berasal dari pegunungan Toraja, Sulawesi Selatan. Kopi arabika ini memiliki karakter kuat dengan rasa cokelat, rempah-rempah, dan sedikit asam buah...</p>
+                </div>
+            </article>
+        </section>
+    </div>
+
+    <div class="video-container">
+        <h2 class="video-title">Referensi Lain</h2>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/dt9YlmyD-CE" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="close-btn" onclick="closeLightbox()">×</span>
+            <img id="lightbox-image" class="lightbox-image" src="img/3.jpg" alt="Lightbox Image">
+            <h2 id="lightbox-title"></h2>
+            <p id="lightbox-description"></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Blog Kopi Indonesia. Hak Cipta tidak Dilindungi.</p>
+    </footer>
+
+    <script>
+        function openLightbox(title, description, imageSrc) {
+            document.getElementById('lightbox-title').textContent = title;
+            document.getElementById('lightbox-description').textContent = description;
+            document.getElementById('lightbox-image').src = imageSrc;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        // Close lightbox when clicking outside the content
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
